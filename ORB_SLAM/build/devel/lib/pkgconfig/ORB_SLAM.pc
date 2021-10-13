@@ -1,0 +1,8 @@
+prefix=/mnt/d/workspace/SLAM/ORB_SLAM/build/devel
+
+Name: ORB_SLAM
+Description: Description of ORB_SLAM
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
