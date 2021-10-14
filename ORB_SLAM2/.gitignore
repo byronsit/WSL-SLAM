@@ -21,4 +21,7 @@ Vocabulary/ORBvoc.txt
 build/
 *~
 lib/
+CMakeLists.txt.*
+
+.CMakeLists.txt.*
 

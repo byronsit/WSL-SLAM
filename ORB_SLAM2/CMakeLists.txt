@@ -28,16 +28,22 @@ endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 3.0 QUIET)
-if(NOT OpenCV_FOUND)
-   find_package(OpenCV 2.4.3 QUIET)
-   if(NOT OpenCV_FOUND)
-      message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
-   endif()
-endif()
+#find_package(OpenCV 3.0 QUIET)
+#if(NOT OpenCV_FOUND)
+	find_package(OpenCV 2.4.13 REQUIRED EXACT)
+	#if(NOT OpenCV_FOUND)
+	#message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
+	#endif()
+   #endif()
 
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
+get_cmake_property(_variableNames VARIABLES)
+foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
+execute_process(COMMAND "${CMAKE_COMMAND}" "-E" "environment")
+                                                                          
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -72,6 +78,7 @@ src/Viewer.cc
 
 target_link_libraries(${PROJECT_NAME}
 ${OpenCV_LIBS}
+${OpenCV_LIBRARIES}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
 ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
@@ -109,5 +116,6 @@ target_link_libraries(mono_kitti ${PROJECT_NAME})
 
 add_executable(mono_euroc
 Examples/Monocular/mono_euroc.cc)
-target_link_libraries(mono_euroc ${PROJECT_NAME})
+
+target_link_libraries(mono_euroc ${PROJECT_NAME} ${OpenCV_LIBRARIES})
 
